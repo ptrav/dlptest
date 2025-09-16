@@ -1,0 +1,188 @@
+/*
+ * @file style.css
+ * @description Main stylesheet for the application
+ * @author Phil Traversa
+ * @license https://www.gnu.org/licenses/agpl-3.0.txt
+ */
+
+/* Root Variables and Global Styles */
+:root {
+    --primary-color: #007bff; --primary-hover: #0056b3; --secondary-color: #6c757d;
+    --background-color: #f8f9fa; --surface-color: #ffffff; --text-color: #212529;
+    --text-muted-color: #6c757d; --border-color: #dee2e6; --table-stripe-color: #f2f2f2;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+html.dark-mode {
+    --primary-color: #3b9bff; --primary-hover: #5caeff; --secondary-color: #8b949e;
+    --background-color: #0d1117; --surface-color: #161b22; --text-color: #c9d1d9;
+    --text-muted-color: #8b949e; --border-color: #30363d; --table-stripe-color: #1a212b;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Core Layout */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.2s, color 0.2s;
+}
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header & Footer */
+header {
+    background-color: var(--surface-color); border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0; transition: background-color 0.2s, border-color 0.2s;
+}
+header .container { display: flex; justify-content: space-between; align-items: center; }
+header .header-content { text-align: left; }
+footer {
+    border-top: 1px solid var(--border-color); margin-top: 2rem; padding: 1.5rem 0;
+    font-size: 0.9rem; color: var(--text-muted-color); text-align: center;
+    transition: border-color 0.2s;
+}
+.footer-icon {
+    height: 0.9em;
+    width: auto;
+    vertical-align: -0.1em;
+    color: var(--primary-color);
+    margin: 0 0.25em;
+}
+
+/* Typography & Sections */
+h1 { margin: 0; color: var(--primary-color); font-size: 2rem; }
+h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; margin-top: 0; }
+.test-section {
+    background-color: var(--surface-color); padding: 2rem; margin: 2rem 0;
+    border-radius: 0.5rem; box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Theme Toggle Switch */
+.theme-switch-wrapper { display: flex; align-items: center; gap: 0.5rem; font-size: 1.2rem; }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--secondary-color); border-radius: 28px;
+}
+.slider:before {
+    position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+    background-color: white; border-radius: 50%;
+}
+body.js-loaded .slider,
+body.js-loaded .slider:before {
+    transition: .25s;
+}
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* Components */
+.card {
+    display: block; background: var(--surface-color); border: 1px solid var(--border-color);
+    border-radius: 0.5rem; padding: 1.5rem; text-decoration: none; color: var(--text-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px var(--shadow-color); border-color: var(--primary-color); }
+.card h3 { margin-top: 0; color: var(--primary-color); }
+.custom-form-container fieldset { border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; }
+.custom-form-container legend { font-weight: bold; padding: 0 0.5rem; color: var(--text-muted-color); }
+.checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+.checkbox-item { display: flex; align-items: center; }
+.checkbox-item input[type="checkbox"] { margin-right: 0.75rem; width: 1.25em; height: 1.25em; accent-color: var(--primary-color); }
+.checkbox-item label { cursor: pointer; }
+button[type="submit"] {
+    display: block; width: 100%; padding: 0.75rem 1rem; font-size: 1.1rem;
+    font-weight: bold; color: #fff; background-color: var(--primary-color);
+    border: none; border-radius: 0.5rem; cursor: pointer; transition: background-color 0.2s ease;
+    margin-top: 1.5rem;
+}
+button[type="submit"]:hover:not(:disabled) { background-color: var(--primary-hover); }
+.breadcrumb { margin-top: 1rem; margin-bottom: 1rem; }
+.breadcrumb a { color: var(--primary-color); text-decoration: none; font-weight: bold; transition: color 0.2s ease; }
+.breadcrumb a:hover { color: var(--primary-hover); text-decoration: underline; }
+
+/* Table Styles */
+.table-wrapper {
+    overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+thead th { background-color: var(--background-color); font-weight: bold; position: sticky; top: 0; z-index: 1; transition: background-color 0.2s; }
+tbody tr:nth-child(even) { background-color: var(--table-stripe-color); }
+tbody tr:hover { background-color: var(--border-color); }
+td[data-label="Credit Card Number"] { display: flex; align-items: center; }
+
+/* Tooltip Styles */
+.tooltip-container { position: relative; display: inline-block; margin-left: 4px; z-index: 2; }
+.tooltip-icon {
+    font-size: 0.8em; font-weight: bold; color: var(--secondary-color); cursor: help;
+    border: 1px solid var(--secondary-color); border-radius: 50%; width: 1.2em;
+    height: 1.2em; display: inline-flex; align-items: center; justify-content: center;
+    line-height: 1;
+}
+.page-tooltip {
+    position: fixed; z-index: 9999; width: 220px; background-color: #333; color: #fff;
+    text-align: center; border-radius: 0.5rem; padding: 8px; font-weight: normal;
+    white-space: normal; pointer-events: none; opacity: 0; transition: opacity 0.2s;
+}
+html.dark-mode .page-tooltip { background-color: #e0e0e0; color: #121212; }
+
+/* Credit Card Icon Styles */
+.cc-icon {
+    height: 1.5em;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 0.6em;
+    color: var(--secondary-color);
+}
+.ccn-content-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Utility Styles */
+.error { color: #dc3545; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 1rem; border-radius: 0.5rem; }
+html.dark-mode .error { background-color: #441a21; border-color: #9e283a; color: #f5c6cb; }
+
+/* Responsive Table */
+@media (max-width: 1200px) {
+    thead { border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+    tr { display: block; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; }
+    td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted var(--border-color); padding: 0.75rem; }
+    td::before { content: attr(data-label); font-weight: bold; text-transform: uppercase; font-size: 0.9em; padding-right: 1em; }
+    td:last-child { border-bottom: 0; }
+    td { white-space: normal; }
+}
+
+/* Toast Notification Theming */
+.theme-toast {
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #212529;
+    color: #f8f9fa;
+    padding: 0.75rem 0.75rem;
+    border-radius: 0.5rem;
+    z-index: 10000;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+.theme-toast.show {
+    opacity: 1;
+    top: 0.8rem;
+}
+html.dark-mode .theme-toast {
+    background-color: #c9d1d9;
+    color: #0d1117;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}

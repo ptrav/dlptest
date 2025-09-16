@@ -1,0 +1,125 @@
+<!-- 
+ @file predefined-1.html
+ @description Results page with 30x fictious Names, Addresses, and Credit Card Numbers
+ @author Phil Traversa
+ @license https://www.gnu.org/licenses/agpl-3.0.txt
+ @requires style.css
+ @requires theme.js
+ @requires helpers.js
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>DLP Test Case: Name + Address + CCN</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="A tool to generate pages with various types of PII for verifying DLP software functionality. This page contains 30 records with Name, Street Address, and Credit Card Number.">
+    <script src="js/theme.js"></script>
+</head>
+<body class="results-page">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>DLP Test Suite 🕵️</h1>
+                <p><b>A tool to generate pages with various PII for verifying DLP software functionality.</b><br>Any similarity to actual persons or their data, living or dead, is purely coincidental.</p>
+            </div>
+            <div class="theme-switch-wrapper">
+                <span>☀️</span>
+                <label class="theme-switch" for="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" />
+                    <span class="slider"></span>
+                </label>
+                <span>🌙</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">&larr; Back to Generator</a>
+        </nav>
+        <section class="test-section">
+            <h2>Test Case: Name + Street Address + CCN</h2>
+            <p>The following table contains cleartext PII for DLP system testing:</p>
+            <div id="results-container" class="table-wrapper" role="region" aria-live="polite">
+                <p>Loading data...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"/></svg>            in Chicago |  © 2025 <a href="https://github.com/ptrav/" target="_blank" rel="external" style="color:#8b949e">Phil Traversa</a><br>Licensed under <a href="https://www.gnu.org/licenses/agpl-3.0.txt" target="_blank" rel="external" style="color:#8b949e">AGPLv3</a> with Font Awesome icongraphy under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="external" style="color:#8b949e">CC BY 4.0</a><br>Visa, Mastercard, American Express, and Discover card logos are trademarked by their respective owners and displayed under <i>nominative fair use</i></p>
+        </div>
+    </footer>
+
+    <script src="js/helpers.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const resultsContainer = document.getElementById('results-container');
+            
+            if (!window.dlpTestHelpers) {
+                resultsContainer.innerHTML = '<p class="error"><strong>FATAL:</strong> A critical file (helpers.js) is missing.</p>';
+                return;
+            }
+
+            // main logic
+            try {
+                // specific configuration for this test case
+                const requiredFiles = ['names', 'addresses', 'ccns'];
+                const headers = [
+                    '<th scope="col">Name</th>',
+                    '<th scope="col">Street Address</th>',
+                    `<th scope="col">Credit Card Number <span class="tooltip-container" data-tooltip-text="CCNs are checksummed with the Luhn algorithm.<br><br><i>Supported card types: Visa, Mastercard, American Express, and Discover Card</i>"><span class="tooltip-icon">ⓘ</span></span></th>`
+                ];
+
+                // fetch all required data files in parallel
+                const promises = requiredFiles.map(file => fetch(`data/${file}.json`));
+                const responses = await Promise.all(promises);
+                for (const response of responses) { if (!response.ok) throw new Error(`Failed to load: ${response.url}`); }
+                
+                const [names, addresses, ccns] = await Promise.all(responses.map(res => res.json()));
+
+                // use shared shuffleArray helper to randomize all data
+                window.dlpTestHelpers.shuffleArray(names);
+                window.dlpTestHelpers.shuffleArray(addresses);
+                window.dlpTestHelpers.shuffleArray(ccns);
+
+                const records = [];
+                const recordCount = Math.min(30, names.length, addresses.length, ccns.length);
+                for (let i = 0; i < recordCount; i++) {
+                    records.push({
+                        name: names[i],
+                        address: addresses[i],
+                        ccn: ccns[i],
+                    });
+                }
+
+                // build results table
+                const table = document.createElement('table');
+                table.innerHTML = `<thead><tr>${headers.join('')}</tr></thead>`;
+                const tbody = document.createElement('tbody');
+                records.forEach(record => {
+                    const row = document.createElement('tr');
+                    // Use the shared formatCCN helper for display.
+                    row.innerHTML = `<td data-label="Name">${record.name}</td><td data-label="Street Address">${record.address}</td><td data-label="Credit Card Number">${window.dlpTestHelpers.formatCCN(record.ccn)}</td>`;
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                
+                resultsContainer.innerHTML = '';
+                resultsContainer.appendChild(table);
+                
+                // call helpers to add tooltips and expand container if needed
+                window.dlpTestHelpers.addTooltipEvents();
+                window.dlpTestHelpers.autoExpandContainer();
+
+            } catch (error) {
+                console.error('Failed to build predefined page:', error);
+                resultsContainer.innerHTML = '<p class="error"><strong>Error:</strong> Could not load test data. Please check the browser console for details.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

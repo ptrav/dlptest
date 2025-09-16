@@ -1,0 +1,138 @@
+<!-- 
+ @file index.html
+ @description Landing page for the DLP Test Suite application
+ @author Phil Traversa
+ @license https://www.gnu.org/licenses/agpl-3.0.txt
+ @requires style.css
+ @requires theme.js
+ @requires helpers.js
+ @requires customtestbuilder.js
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLP Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="A tool to generate pages with various types PII for verifying DLP software functionality.">
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>DLP Test Suite 🕵️</h1>
+                <p><b>A tool to generate pages with various PII for verifying DLP software functionality.</b><br>Any similarity to actual persons or their data, living or dead, is purely coincidental.</p>
+            </div>
+            <div class="theme-switch-wrapper">
+                <span>☀️</span>
+                <label class="theme-switch" for="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" />
+                    <span class="slider"></span>
+                </label>
+                <span>🌙</span>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="test-section">
+            <h2>Traditional PII Test Cases</h2>
+            <p>Click a link to open a new page with predefined combinations of personally identifiable information (PII):</p>
+            <nav class="card-container">
+                <a href="predefined-1.html" class="card" target="_blank">
+                    <h3>Name + Address + CCN</h3>
+                    <p>Displays 30 random rows of data with a Name, Street Address, and Credit Card Number...</p>
+                </a>
+                <a href="predefined-2.html" class="card" target="_blank">
+                    <h3>Name + DOB + SSN</h3>
+                    <p>Displays 30 random rows of data with a Name, Date of Birth, and US Social Security Number...</p>
+                </a>
+                <a href="predefined-3.html" class="card" target="_blank">
+                    <h3>Name + DOB + DL</h3>
+                    <p>Displays 30 random rows of data with a Name, Date of Birth, and US Driver's License Number...</p>
+                </a>
+                <a href="predefined-4.html" class="card" target="_blank">
+                    <h3>All Traditional PII Types</h3>
+                    <p>Displays 30 random rows with all the above data types: Name, Address, DOB, SSN, DL, and CCN...</p>
+                </a>
+            </nav>
+        </section>
+        <section class="test-section">
+            <h2>Custom Test Builder</h2>
+            <p>Select the PII types you want to include. A new page will be generated with 30 records of the below:</p>
+            <form id="custom-form" class="custom-form-container">
+                <fieldset>
+                    <legend>Select PII data to include:</legend>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="name" checked disabled>
+                            <label for="name">Name (First + Last)
+                                <span class="tooltip-container" data-tooltip-text="Name is always included.">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="dob" name="pii-type" value="dobs" data-label="Date of Birth">
+                            <label for="dob">Date of Birth (DOB)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ssn" name="pii-type" value="ssns" data-label="Social Security Number">
+                            <label for="ssn">Social Security Number (SSN)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ccn" name="pii-type" value="ccns" data-label="Credit Card Number">
+                            <label for="ccn">Credit Card Number (CCN)
+                                <span class="tooltip-container" data-tooltip-text="CCNs are checksummed with the Luhn algorithm.<br><br><i>Supported card types: Visa, Mastercard, American Express, and Discover Card</i>">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="dl" name="pii-type" value="dls" data-label="Driver's License">
+                            <label for="dl">Driver's License (DL)
+                                <span class="tooltip-container" data-tooltip-text="DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br><i>Currently implemented: CA, TX, FL, IL, NY</i>">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="address" name="pii-type" value="addresses" data-label="Street Address">
+                            <label for="address">Street Address</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="phone" name="pii-type" value="phones" data-label="Telephone Number">
+                            <label for="phone">Telephone Number</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ach" name="pii-type" value="ach" data-label="ACH Banking Info">
+                            <label for="ach">ACH Banking Info
+                                <span class="tooltip-container" data-tooltip-text="Consists of assigned ABA 9-digit routing transit numbers paired with fictious 8 to 17 digit account numbers.">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <button type="submit" id="generate-btn">Generate Custom PII Test Data</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>Made with <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"/></svg>            in Chicago |  © 2025 <a href="https://github.com/ptrav/" target="_blank" rel="external" style="color:#8b949e">Phil Traversa</a><br>Licensed under <a href="https://www.gnu.org/licenses/agpl-3.0.txt" target="_blank" rel="external" style="color:#8b949e">AGPLv3</a> with Font Awesome icongraphy under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="external" style="color:#8b949e">CC BY 4.0</a></p>
+        </div>
+    </footer>
+    <script src="js/helpers.js"></script>
+    <script src="js/customtestbuilder.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // tooltips
+            if (window.dlpTestHelpers && window.dlpTestHelpers.addTooltipEvents) {
+                window.dlpTestHelpers.addTooltipEvents();
+            }
+        });
+    </script>
+</body>
+</html>
