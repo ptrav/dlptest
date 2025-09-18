@@ -21,7 +21,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <h1>DLP Test Suite 🕵️</h1>
+                <h1><a href="index.html">DLP Test Suite 🕵️</a></h1>
                 <p><b>A tool to generate pages with various PII for verifying DLP software functionality.</b><br>Any similarity to actual persons or their data, living or dead, is purely coincidental.</p>
             </div>
             <div class="theme-switch-wrapper">
@@ -58,6 +58,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const resultsContainer = document.getElementById('results-container');
+            
             if (!window.dlpTestHelpers) {
                 resultsContainer.innerHTML = '<p class="error"><strong>FATAL:</strong> A critical file (helpers.js) is missing.</p>';
                 return;
@@ -70,15 +71,25 @@
             }
 
             try {
+                const payload = JSON.parse(storedPayload);
+                const data = payload.data;
+                const headers = payload.headers;
+                
+                // standard tooltip content
                 const tooltipContent = {
                     'Credit Card Number': 'CCNs are checksummed with the Luhn algorithm.<br><br><i>Supported card types: Visa, Mastercard, American Express, and Discover Card</i>',
                     'Driver\'s License': 'DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br><i>Currently implemented: CA, TX, FL, IL, NY</i>',
                     'ACH Banking Info': 'Consists of assigned ABA 9-digit routing transit numbers paired with fictious 8 to 17 digit account numbers.'
                 };
-                
-                const payload = JSON.parse(storedPayload);
-                const data = payload.data;
-                const headers = payload.headers;
+
+                // check for HARD MODE and make modifications if so
+                if (payload.isHardMode) {
+                    const mainHeading = document.querySelector('.test-section h2');
+                    if(mainHeading) {
+                        mainHeading.innerHTML = '<span class="hard-mode-red">HARD MODE:</span> Potentially Bogus Credit Card Numbers';
+                    }
+                    tooltipContent['Credit Card Number'] = '<span class="hard-mode-red"><b>HARD MODE enabled</b></span><br><br>Your DLP software may be fooled by simultaneously valid yet invalid CCNs.<br><br><i>Go back to the landing page to revert back to normal mode</i>';
+                }
 
                 const table = document.createElement('table');
                 const thead = document.createElement('thead');
@@ -89,7 +100,7 @@
                     const th = document.createElement('th');
                     th.scope = 'col';
                     if (tooltipContent[headerText]) {
-                        th.innerHTML = `${headerText} <span class="tooltip-container" data-tooltip-text="${tooltipContent[headerText]}"><span class="tooltip-icon">ⓘ</span></span>`;
+                        th.innerHTML = `${headerText} <span class="tooltip-container"><span class="tooltip-icon">ⓘ</span><div class="tooltip-content" style="display: none;">${tooltipContent[headerText]}</div></span>`;
                     } else {
                         th.textContent = headerText;
                     }

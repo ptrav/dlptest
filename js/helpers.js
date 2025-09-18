@@ -92,19 +92,31 @@
     };
     window.dlpTestHelpers.generateDL = generateDL;
 
-    // mouseover and mouseout event listeners for all tooltip icons
+    // mouseover and mouseout event listeners and logic for tooltips
     const addTooltipEvents = () => {
         setTimeout(() => {
             const tooltipContainers = document.querySelectorAll('.tooltip-container');
             let tooltipElement;
             tooltipContainers.forEach(container => {
                 container.addEventListener('mouseover', (event) => {
-                    const text = container.dataset.tooltipText;
-                    if (!text) return;
+                    let text = ''; // initialize empty variable for tooltip text
+
+                    // check for the hidden <div> only used in the custom test builder
+                    const tooltipSource = container.querySelector('.tooltip-content');
+                    if (tooltipSource) {
+                        text = tooltipSource.innerHTML;
+                    } else {
+                        // FALLBACK: if no <div> is found, use data-attribute implemented on all other pages
+                        text = container.dataset.tooltipText;
+                    }
+                    
+                    if (!text) return; // exit if no text was found by either method
+
                     tooltipElement = document.createElement('div');
                     tooltipElement.className = 'page-tooltip';
                     tooltipElement.innerHTML = text;
                     document.body.appendChild(tooltipElement);
+
                     const iconRect = container.getBoundingClientRect();
                     const tooltipRect = tooltipElement.getBoundingClientRect();
                     let top = iconRect.top - tooltipRect.height - 10;

@@ -57,6 +57,7 @@ footer {
 
 /* Typography & Sections */
 h1 { margin: 0; color: var(--primary-color); font-size: 2rem; }
+header h1 a { text-decoration: none; color: inherit; }
 h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; margin-top: 0; }
 .test-section {
     background-color: var(--surface-color); padding: 2rem; margin: 2rem 0;
@@ -185,4 +186,66 @@ html.dark-mode .theme-toast {
     background-color: #c9d1d9;
     color: #0d1117;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* HARD MODE */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 20000;
+}
+
+.modal-box {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 20001;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.modal-box p {
+    margin-top: 0;
+    line-height: 1.6;
+}
+
+.modal-box button {
+    margin-top: 1rem;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.modal-box button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Style for the generate button in hard mode */
+#generate-btn.hard-mode-btn {
+    background-color: #dc3545; /* Red color */
+}
+
+#generate-btn.hard-mode-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.hard-mode-red {
+    color: #dc3545; /* Same red as the hard mode button */
 }

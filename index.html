@@ -22,7 +22,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <h1>DLP Test Suite 🕵️</h1>
+                <h1><a href="index.html">DLP Test Suite 🕵️</a></h1>
                 <p><b>A tool to generate pages with various PII for verifying DLP software functionality.</b><br>Any similarity to actual persons or their data, living or dead, is purely coincidental.</p>
             </div>
             <div class="theme-switch-wrapper">
@@ -134,5 +134,16 @@
             }
         });
     </script>
+    <div id="hard-mode-overlay" class="modal-overlay"></div>
+    <div id="hard-mode-modal" class="modal-box">
+        <p>
+            <span class="hard-mode-red"><b>HARD MODE enabled</b></span><br><br>
+            Click the red button to generate a list of non-conforming CCNs that initially calculate as valid but cause collisions in the Luhn algorithm when deconstructed and re-checksummed.<br><br>
+            Your DLP tool must use context clues to determine if these are actually "credit card numbers". Many tools will fail at detecting these as they should not be assigned.<br><br><b>
+            It is up to you whether that behavior is good or bad.</b><br><br><i>
+            Refresh the page to revert back to normal mode</i>
+        </p>
+        <button id="hard-mode-ok-btn">OK</button>
+    </div>
 </body>
 </html>

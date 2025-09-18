@@ -70,4 +70,4 @@ Disclaimer: any similarity in this data to actual persons living or dead is pure
 
 ---
 
-> Made with <3 in Chicago
+> Made with :blue_heart: in Chicago
