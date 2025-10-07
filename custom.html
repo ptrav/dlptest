@@ -77,9 +77,10 @@
                 
                 // standard tooltip content
                 const tooltipContent = {
-                    'Credit Card Number': 'CCNs are checksummed with the Luhn algorithm.<br><br><i>Supported card types: Visa, Mastercard, American Express, and Discover Card</i>',
-                    'Driver\'s License': 'DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br><i>Currently implemented: CA, TX, FL, IL, NY</i>',
-                    'ACH Banking Info': 'Consists of assigned ABA 9-digit routing transit numbers paired with fictious 8 to 17 digit account numbers.'
+                    'Credit Card Number': 'CCNs are checksummed with the Luhn algorithm.<br><br>Supported card types: Visa, Mastercard, American Express, and Discover Card',
+                    'Driver\'s License': 'DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br>Currently implemented: CA, TX, FL, IL, NY',
+                    'ACH Banking Info': 'Consists of assigned ABA 9-digit routing transit numbers paired with fictious 8 to 17 digit account numbers.',
+                    'ICD-10-CM Diagnosis Code': 'ICD-10 is a medical coding system used to classify health conditions and clinical procedures for claims processing with the \'CM\' codeset used for medical diagnoses.<br><br>The \'7th character\' used in some cases is not implemented in this test. Data is from the FY26 code update effective on Oct 1, 2025.',
                 };
 
                 // check for HARD MODE and make modifications if so
@@ -118,6 +119,11 @@
                         
                         if (header === 'Credit Card Number' && cellValue) {
                             cell.innerHTML = window.dlpTestHelpers.formatCCN(cellValue);
+                        } else if (header === 'ICD-10-CM Diagnosis Code' && cellValue && cellValue.includes(' ')) {
+                            const firstSpaceIndex = cellValue.indexOf(' ');
+                            const code = cellValue.substring(0, firstSpaceIndex);
+                            const description = cellValue.substring(firstSpaceIndex + 1);
+                            cell.innerHTML = `<strong>${code}</strong> ${description}`;
                         } else {
                             cell.textContent = cellValue || 'N/A';
                         }

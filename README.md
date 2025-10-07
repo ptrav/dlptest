@@ -54,6 +54,8 @@ Select from several available categories of PII and build your own test suite wi
 
 * ACH banking info (ABA routing number + account number)
 
+* ICD-10-CM medical diagnosis codes for claims processing in all healthcare settings
+
 ---
 
 ## For the Developers

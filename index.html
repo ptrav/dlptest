@@ -84,7 +84,7 @@
                         <div class="checkbox-item">
                             <input type="checkbox" id="ccn" name="pii-type" value="ccns" data-label="Credit Card Number">
                             <label for="ccn">Credit Card Number (CCN)
-                                <span class="tooltip-container" data-tooltip-text="CCNs are checksummed with the Luhn algorithm.<br><br><i>Supported card types: Visa, Mastercard, American Express, and Discover Card</i>">
+                                <span class="tooltip-container" data-tooltip-text="CCNs are checksummed with the Luhn algorithm.<br><br>Supported card types: Visa, Mastercard, American Express, and Discover Card">
                                     <span class="tooltip-icon">ⓘ</span>
                                 </span>
                             </label>
@@ -92,7 +92,7 @@
                         <div class="checkbox-item">
                             <input type="checkbox" id="dl" name="pii-type" value="dls" data-label="Driver's License">
                             <label for="dl">Driver's License (DL)
-                                <span class="tooltip-container" data-tooltip-text="DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br><i>Currently implemented: CA, TX, FL, IL, NY</i>">
+                                <span class="tooltip-container" data-tooltip-text="DL numbers are uniquely generated per state formatting requirements and paired with last names.<br><br>Currently implemented: CA, TX, FL, IL, NY">
                                     <span class="tooltip-icon">ⓘ</span>
                                 </span>
                             </label>
@@ -109,6 +109,14 @@
                             <input type="checkbox" id="ach" name="pii-type" value="ach" data-label="ACH Banking Info">
                             <label for="ach">ACH Banking Info
                                 <span class="tooltip-container" data-tooltip-text="Consists of assigned ABA 9-digit routing transit numbers paired with fictious 8 to 17 digit account numbers.">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="icd-10-cm" name="pii-type" value="icd-10-cm" data-label="ICD-10-CM Diagnosis Code">
+                            <label for="icd-10-cm">ICD-10-CM Diagnosis Code
+                                <span class="tooltip-container" data-tooltip-text="ICD-10 is a medical coding system used to classify health conditions and clinical procedures for claims processing with the 'CM' codeset used for medical diagnoses.<br><br>The '7th character' used in some cases is not implemented in this test. Data is from the FY26 code update effective on Oct 1, 2025.">
                                     <span class="tooltip-icon">ⓘ</span>
                                 </span>
                             </label>

@@ -131,6 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         const dataValue = dataArray[i];
                         if (pii.key === 'ach') {
                             record[simpleKey] = `${dataValue.routing} ${dataValue.account}`;
+                        } else if (pii.key === 'icd-10-cm') {
+                            record[simpleKey] = `${dataValue['ICD-10-CM']} ${dataValue['Description']}`;
                         } else {
                             record[simpleKey] = dataValue;
                         }
