@@ -121,6 +121,22 @@
                                 </span>
                             </label>
                         </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="aws-access-key" name="pii-type" value="aws-access-key" data-label="AWS Access Key">
+                            <label for="aws-access-key">AWS Access Key
+                                <span class="tooltip-container" data-tooltip-text="An AWS Access Key is a unique identifier paired with an AWS Secret Key to provide programmatic access to Amazon Web Services.<br><br>It can be shared but probably shouldn't be.">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="aws-secret-key" name="pii-type" value="aws-secret-key" data-label="AWS Secret Key">
+                            <label for="aws-secret-key">AWS Secret Key
+                                <span class="tooltip-container" data-tooltip-text="An AWS Secret Key is a unique identifier paired with an AWS Access Key to provide programmatic access to Amazon Web Services.<br><br>As its name suggests, it is 'secret' and you should never share it.">
+                                    <span class="tooltip-icon">ⓘ</span>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </fieldset>
                 <button type="submit" id="generate-btn">Generate Custom PII Test Data</button>
